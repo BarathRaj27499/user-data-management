@@ -1,0 +1,31 @@
+input{
+    width: 64%;
+}
+
+.search-add-container{
+    width: 40%;
+}
+
+select{
+    width: 10%;
+}
+
+.table-container{
+    max-height: 73vh;
+    overflow-y: auto;
+}
+
+.table thead th {
+  position: sticky;
+  top: 0;
+  background: #f8f9fa;
+  z-index: 1;
+}
+
+.empty-result-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60vh;
+}
+

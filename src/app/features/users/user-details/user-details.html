@@ -1,0 +1,39 @@
+<div class="card p-3">
+  <div (click)="closeModal()" class="d-flex justify-content-end">
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  </div>
+  <div class="d-flex justify-content-center align-items-center">
+    <app-avatar [name]="userDetails.name" [src]="userDetails.avatar" [size]="100"></app-avatar>
+  </div>
+  <div class="card-body">
+    <table class="table table-bordered">
+      <tbody>
+        <tr>
+          <th>ID</th>
+          <td>{{userDetails.id}}</td>
+        </tr>
+        <tr>
+          <th>Name</th>
+          <td>{{userDetails.name}}</td>
+        </tr>
+        <tr>
+          <th>Email</th>
+          <td>{{userDetails.email}}</td>
+        </tr>
+        <tr>
+          <th>Role</th>
+          <td>{{userDetails.role}}</td>
+        </tr>
+        <tr>
+          <th>Status</th>
+          <td>
+            <span class="badge" [class.bg-success]="userDetails.status==='Active'"
+              [class.bg-secondary]="userDetails.status==='Inactive'">
+              {{ userDetails.status }}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

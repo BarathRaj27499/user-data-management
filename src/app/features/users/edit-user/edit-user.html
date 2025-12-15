@@ -1,0 +1,63 @@
+<div class="m-4">
+    <div (click)="closeModal()" class="d-flex justify-content-end">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="d-flex justify-content-center align-items-center">
+        <app-avatar [name]="userDetails.name" [src]="userDetails.avatar" [size]="100"></app-avatar>
+    </div>
+    <form [formGroup]="editUserForm" (ngSubmit)="submit()">
+        <div class="mb-3">
+            <label class="form-label">Name</label>
+            <input type="text" class="form-control" formControlName="name"
+                [class.is-invalid]="editUserForm.get('name')?.invalid && editUserForm.get('name')?.touched" />
+            <div class="invalid-feedback">
+                @if (editUserForm.get('name')?.errors?.['required']) {
+                <span>
+                    Name is required.
+                </span>
+                }
+                @if (editUserForm.get('name')?.errors?.['maxlength']) {
+                <span>
+                    Name cannot exceed 50 characters.
+                </span>
+                }
+            </div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-control" formControlName="email"
+                [class.is-invalid]="editUserForm.get('email')?.invalid && editUserForm.get('email')?.touched" />
+            <div class="invalid-feedback">
+                @if (editUserForm.get('email')?.errors?.['required']) {
+                <span>
+                    Email is required.
+                </span>
+                }
+                @if (editUserForm.get('email')?.errors?.['email']) {
+                <span>
+                    Enter a valid email address.
+                </span>
+                }
+            </div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Role</label>
+            <select class="form-select" formControlName="role"
+                [class.is-invalid]="editUserForm.get('role')?.invalid && editUserForm.get('role')?.touched">
+                <option value="">Select role</option>
+                <option value="Admin">Admin</option>
+                <option value="User">User</option>
+                <option value="Manager">Manager</option>
+            </select>
+
+            <div class="invalid-feedback">
+                Role is required.
+            </div>
+        </div>
+        <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary mt-2" [disabled]="editUserForm.invalid">
+                Update
+            </button>
+        </div>
+    </form>
+</div>

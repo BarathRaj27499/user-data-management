@@ -1,0 +1,9 @@
+<div class="avatar" [style.width.px]="size" [style.height.px]="size" [style.background]="bgColor"
+    [style.color]="textColor" [style.fontSize.px]="fontSize">
+    @if (src) {
+    <img [src]="src" />
+    }
+    @else{
+    <span>{{ initials }}</span>
+    }
+</div>

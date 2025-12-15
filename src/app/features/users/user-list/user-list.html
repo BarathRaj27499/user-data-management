@@ -1,0 +1,71 @@
+<nav class="navbar bg-body-tertiary">
+	<div class="container-fluid">
+		<a class="navbar-brand">User Management</a>
+		<div class="d-flex search-add-container justify-content-between">
+			<input class="form-control me-2" [(ngModel)]="searchText" placeholder="Search by name or email" />
+			<button type="button" class="btn btn-primary" (click)="openAddUserModal()">+ Add User</button>
+		</div>
+	</div>
+</nav>
+<div class="table-container mt-4">
+	<table class="table">
+		<thead class="table-light">
+			<tr>
+				<th>ID</th>
+				<th>Name</th>
+				<th>Email</th>
+				<th>Role</th>
+				<th>Status</th>
+				<th width="200">Actions</th>
+			</tr>
+		</thead>
+		@if (filteredUsers().length > 0) {
+		<tbody>
+			@for (user of filteredUsers() | paginate: { itemsPerPage: pageSize, currentPage: page, id: 'users-pagination'
+			}; track user.id) {
+			<tr class="align-middle">
+				<td>{{ user.id }}</td>
+				<td class="d-flex align-items-center">
+					<app-avatar [name]="user.name" [src]="user.avatar" [size]="36">
+					</app-avatar>
+					<span class="ms-2">{{ user.name }}</span>
+				</td>
+
+				<!-- <td>{{ user.name }}</td> -->
+				<td>{{ user.email }}</td>
+				<td>{{ user.role }}</td>
+				<td>
+					<span class="badge" [class.bg-success]="user.status==='Active'"
+						[class.bg-secondary]="user.status==='Inactive'">
+						{{ user.status }}
+					</span>
+				</td>
+
+				<td>
+					<i class="fa-solid fa-eye mx-1" role="button" (click)="openUserDetails(user)"></i>
+					<i class="fa-solid fa-pen-to-square me-1" (click)="openEditUserModal(user)" role="button"></i>
+					<i class="fa-solid fa-trash-can mx-1" (click)="deleteUser(user.id)" role="button"></i>
+				</td>
+			</tr>
+			}
+		</tbody>
+		}
+	</table>
+	@if (filteredUsers().length === 0) {
+	<div class="empty-result-container">
+		<h6>No matching user found!</h6>
+	</div>
+	}
+</div>
+@if(filteredUsers().length > 0){
+<div class="d-flex justify-content-between align-items-center mt-5">
+	<pagination-controls id="users-pagination" (pageChange)="page = $event"></pagination-controls>
+	<select [(ngModel)]="pageSize" (ngModelChange)="onPageSizeChange()" class="form-select me-3" aria-label="Default select example">
+		<option selected value="10">10</option>
+		<option value="20">20</option>
+		<option value="30">30</option>
+		<option value="40">40</option>
+		<option value="50">50</option>
+	</select>
+</div>
+}
