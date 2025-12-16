@@ -1,5 +1,6 @@
 <div class="m-4">
-    <div (click)="closeModal()" class="d-flex justify-content-end">
+    <div (click)="closeModal()" class="d-flex justify-content-between align-items-center mb-4">
+        <h5 class="m-0">Add User</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
     </div>
     <form [formGroup]="userForm" (ngSubmit)="submit()">
