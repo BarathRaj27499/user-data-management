@@ -1,0 +1,26 @@
+.camera-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.camera-video {
+  width: 50vw;
+  background: #000;
+}
+
+.preview img.profile-pic {
+  width: 50vw;
+  border: 2px solid #ccc;
+}
+
+.camera-actions{
+  display: flex;
+  justify-content: space-around;
+  width: 35vw;
+}
+
+.btn-close{
+    box-shadow: none !important;
+}

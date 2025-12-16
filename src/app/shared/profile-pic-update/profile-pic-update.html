@@ -1,0 +1,9 @@
+<div class="modal-header">
+  <h5 class="modal-title">Update Photo</h5>
+  <button type="button" class="btn-close" (click)="activeModal.dismiss()"></button>
+</div>
+<div class="modal-body d-flex justify-content-around py-5">
+    <i class="fa-solid fa-camera fa-3x" (click)="openCamera()" role="button"></i>
+  <i class="fa-solid fa-upload fa-3x" (click)="fileInput.click()"  role="button"></i>
+  <input #fileInput type="file" accept="image/*" hidden (change)="onFileSelected($event)" />
+</div>

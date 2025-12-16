@@ -1,0 +1,25 @@
+<div>
+    <div (click)="closeModal()" class="d-flex justify-content-end align-items-center pe-3 pt-1">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="camera-container p-3">
+        @if(photoPreview()){
+            <div class="preview">
+                <img [src]="photoPreview()" class="profile-pic" />
+            </div>
+        }
+        @else{
+          <video #video autoplay muted playsinline class="camera-video"></video>
+      }
+      <div class="camera-actions">
+          @if (photoPreview()) {
+              <i class="fa-solid fa-xmark fa-2x" (click)="removePhoto()" role="button"></i>
+              <i class="fa-solid fa-check fa-2x" (click)="confirmPhoto()" role="button"></i>
+            }
+            @else {
+                <i class="fa-solid fa-camera fa-2x" (click)="capturePhoto()" role="button"></i>
+                <i class="fa-solid fa-rotate fa-2x" (click)="switchCamera()" role="button"></i>
+            }
+        </div>
+    </div>
+</div>

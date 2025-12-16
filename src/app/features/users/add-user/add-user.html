@@ -1,58 +1,72 @@
+<div class="modal-header">
+    <h5 class="modal-title">Add User</h5>
+    <button type="button" class="btn-close" (click)="closeModal()"></button>
+</div>
 <div class="m-4">
-    <div (click)="closeModal()" class="d-flex justify-content-between align-items-center mb-4">
-        <h5 class="m-0">Add User</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  <form [formGroup]="userForm" (ngSubmit)="submit()">
+    <div class="mb-3">
+      <div class="pro-pic-container">
+        <img class="profile-pic" [src]="imagePreview() || 'images/profile-pic.png'" />
+
+        <div class="d-flex justify-content-center align-items-center mt-2">
+          <a class="text-decoration-none" role="button" (click)="openUpdateModal()">Update</a>
+          @if(imagePreview()){
+
+          <a class="text-decoration-none ms-2" role="button" (click)="removePic()">Remove</a>
+          }
+        </div>
+      </div>
+
+      <label class="form-label">Name</label>
+      <input
+        type="text"
+        class="form-control"
+        formControlName="name"
+        [class.is-invalid]="userForm.get('name')?.invalid && userForm.get('name')?.touched"
+      />
+      <div class="invalid-feedback">
+        @if (userForm.get('name')?.errors?.['required']) {
+        <span> Name is required. </span>
+        } @if (userForm.get('name')?.errors?.['maxlength']) {
+        <span> Name cannot exceed 50 characters. </span>
+        }
+      </div>
     </div>
-    <form [formGroup]="userForm" (ngSubmit)="submit()">
-        <div class="mb-3">
-            <label class="form-label">Name</label>
-            <input type="text" class="form-control" formControlName="name" [class.is-invalid]="userForm.get('name')?.invalid && userForm.get('name')?.touched"/>
-            <div class="invalid-feedback">
-                @if (userForm.get('name')?.errors?.['required']) {
-                    <span>
-                        Name is required.
-                    </span>
-                }
-                @if (userForm.get('name')?.errors?.['maxlength']) {
-                    <span>
-                        Name cannot exceed 50 characters.
-                    </span>
-                }
-            </div>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Email</label>
-            <input type="email" class="form-control" formControlName="email" [class.is-invalid]="userForm.get('email')?.invalid && userForm.get('email')?.touched"/>
-            <div class="invalid-feedback">
-                @if (userForm.get('email')?.errors?.['required']) {
-                    <span>
-                        Email is required.
-                    </span>
-                }
-                @if (userForm.get('email')?.errors?.['email']) {
-                    <span>
-                        Enter a valid email address.
-                    </span>
-                }
-            </div>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Role</label>
-            <select class="form-select" formControlName="role" [class.is-invalid]="userForm.get('role')?.invalid && userForm.get('role')?.touched">
-                <option value="">Select role</option>
-                <option value="Admin">Admin</option>
-                <option value="User">User</option>
-                <option value="Manager">Manager</option>
-            </select>
-    
-            <div class="invalid-feedback">
-                Role is required.
-            </div>
-        </div>
-        <div class="d-flex justify-content-end">
-            <button type="submit" class="btn btn-primary mt-2" [disabled]="userForm.invalid">
-                Create User
-            </button>
-        </div>
-    </form>
+    <div class="mb-3">
+      <label class="form-label">Email</label>
+      <input
+        type="email"
+        class="form-control"
+        formControlName="email"
+        [class.is-invalid]="userForm.get('email')?.invalid && userForm.get('email')?.touched"
+      />
+      <div class="invalid-feedback">
+        @if (userForm.get('email')?.errors?.['required']) {
+        <span> Email is required. </span>
+        } @if (userForm.get('email')?.errors?.['email']) {
+        <span> Enter a valid email address. </span>
+        }
+      </div>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Role</label>
+      <select
+        class="form-select"
+        formControlName="role"
+        [class.is-invalid]="userForm.get('role')?.invalid && userForm.get('role')?.touched"
+      >
+        <option value="">Select role</option>
+        <option value="Admin">Admin</option>
+        <option value="User">User</option>
+        <option value="Manager">Manager</option>
+      </select>
+
+      <div class="invalid-feedback">Role is required.</div>
+    </div>
+    <div class="d-flex justify-content-end">
+      <button type="submit" class="btn btn-primary mt-2" [disabled]="userForm.invalid">
+        Create User
+      </button>
+    </div>
+  </form>
 </div>
