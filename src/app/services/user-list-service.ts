@@ -1,45 +1,46 @@
 import { Injectable, signal } from '@angular/core';
 import { User } from '../models/user';
 import { DEFAULT_USERS } from '../constants/users.constants';
+import { db } from '../db/user.db';
+
 @Injectable({
   providedIn: 'root',
 })
 export class UserListService {
-  private usersSignal = signal<User[]>(this.initData());
+  private usersSignal = signal<User[]>([]);
   users = this.usersSignal.asReadonly();
-  private initData(): User[] {
-    const data = localStorage.getItem('users');
-    if (data) {
-      return JSON.parse(data);
+
+  constructor() {
+    this.init();
+  }
+
+  private async init() {
+    const users = await db.users.toArray();
+
+    if (users.length === 0) {
+      await db.users.bulkAdd(DEFAULT_USERS);
+      this.usersSignal.set(DEFAULT_USERS);
+    } else {
+      this.usersSignal.set(users);
     }
-    localStorage.setItem('users', JSON.stringify(DEFAULT_USERS));
-    return DEFAULT_USERS;
   }
 
-  private save(data: User[]) {
-    localStorage.setItem('users', JSON.stringify(data));
-    this.usersSignal.set(data);
-    console.log(this.users());
+  async addUser(user: User) {
+    await db.users.add(user);
+    this.usersSignal.set([...this.usersSignal(), user]);
   }
 
-  addUser(user: User) {
-    const latestUsers = this.usersSignal();
-    this.save([...latestUsers, user]);
+  async updateUser(updatedUser: User) {
+    await db.users.put(updatedUser);
+    const latestUsers = this.usersSignal().map((user) =>
+      user.id === updatedUser.id ? updatedUser : user
+    );
+    this.usersSignal.set(latestUsers);
   }
 
-  updateUser(updatedUser: User) {
-    const latestUsers = this.usersSignal().map((user) => {
-      return user.id === updatedUser.id ? updatedUser : user;
-    });
-    this.save(latestUsers);
-  }
-
-  deleteUser(id: number) {
+  async deleteUser(id: number) {
+    await db.users.delete(id);
     const latestUsers = this.usersSignal().filter((user) => user.id !== id);
-    this.save(latestUsers);
-  }
-
-  getUserById(id: number) {
-    return this.usersSignal().find((user) => user.id === id);
+    this.usersSignal.set(latestUsers);
   }
 }

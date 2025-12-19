@@ -37,7 +37,7 @@ export class AddUser implements OnInit {
   }
 
   getNextId(): number {
-    return this.service.users().length ? Math.max(...this.service.users().map((u) => u.id)) + 1 : 1;
+    return this.service.users().length ? Math.max(...this.service.users().map((u) => u.id)) + 1 : 1000;
   }
 
   submit() {

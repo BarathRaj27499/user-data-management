@@ -3,8 +3,22 @@
     <button type="button" class="btn-close" (click)="closeModal()"></button>
 </div>
 <div class="m-4">
-    <div class="d-flex justify-content-center align-items-center">
+
+    <div class="pro-pic-container">
+        @if (imagePreview()) {
+        <img class="profile-pic" [src]="imagePreview() || 'images/profile-pic.png'" />
+        }
+        @else {
         <app-avatar [name]="userDetails.name" [src]="userDetails.avatar" [size]="100"></app-avatar>
+
+        }
+        <div class="d-flex justify-content-center align-items-center mt-2">
+            <a class="text-decoration-none" role="button" (click)="openUpdateModal()">Update</a>
+            @if(imagePreview()){
+
+            <a class="text-decoration-none ms-2" role="button" (click)="removePic()">Remove</a>
+            }
+        </div>
     </div>
     <form [formGroup]="editUserForm" (ngSubmit)="submit()">
         <div class="mb-3">
